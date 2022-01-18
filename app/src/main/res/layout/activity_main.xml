@@ -5,8 +5,15 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    tools:context=".MainActivity">
+    tools:context=".ui.MainActivity">
 
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/add_note_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Добавить заметку"
+        android:backgroundTint="#64DD17"
+        app:cornerRadius="16dp"/>
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view"
         android:layout_width="match_parent"

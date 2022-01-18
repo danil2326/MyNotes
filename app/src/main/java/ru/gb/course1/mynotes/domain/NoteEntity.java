@@ -1,4 +1,4 @@
-package ru.gb.course1.mynotes;
+package ru.gb.course1.mynotes.domain;
 
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -17,18 +17,29 @@ public class NoteEntity implements Parcelable {
     };
     private String title;
     private String text;
+    private String id;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public NoteEntity() {
     }
 
-    public NoteEntity(String title, String text) {
+    public NoteEntity(String title, String text, String id) {
         this.title = title;
         this.text = text;
+        this.id = id;
     }
 
     protected NoteEntity(Parcel in) {
         title = in.readString();
         text = in.readString();
+        id = in.readString();
     }
 
 
@@ -59,5 +70,6 @@ public class NoteEntity implements Parcelable {
     public void writeToParcel(Parcel parcel, int i) {
         parcel.writeString(title);
         parcel.writeString(text);
+        parcel.writeString(id);
     }
 }

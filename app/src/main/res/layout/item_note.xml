@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:padding="8dp"
+    app:cardBackgroundColor="#00B8D4"
+    app:cardElevation="20dp"
+    app:cardCornerRadius="45dp"
+    app:cardUseCompatPadding="true">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:hint="Оглавление"
+            android:textSize="41sp"
+            android:padding="8dp"
+            android:textColor="#D50000"
+            android:textStyle="bold"/>
+        <EditText
+            android:id="@+id/text"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:hint="Текст"
+            android:textSize="41sp"
+            android:padding="8dp"
+            android:textColor="#FFD600"/>
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/delete_button"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Delete"
+            android:textSize="20sp"
+            android:backgroundTint="#00C853"
+            android:textColor="@color/black"/>
+
+
+
+    </LinearLayout>
+
+
+</androidx.cardview.widget.CardView>
