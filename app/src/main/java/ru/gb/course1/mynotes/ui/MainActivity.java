@@ -4,49 +4,34 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.widget.Button;
 import android.widget.Toast;
 
-import java.util.ArrayList;
-
+import ru.gb.course1.mynotes.App;
 import ru.gb.course1.mynotes.domain.NoteEntity;
 import ru.gb.course1.mynotes.R;
+import ru.gb.course1.mynotes.domain.NotesRepository;
 
-public class MainActivity extends AppCompatActivity {
-private RecyclerView recyclerView;
-private NoteAdapter adapter;
-private final ArrayList<NoteEntity> noteList = new ArrayList<>();
+public class MainActivity extends AppCompatActivity  {
+    private RecyclerView recyclerView;
+    private NoteAdapter adapter;
+    private NotesRepository notesRepository;
+    private NoteEntity noteEntity;
+    private Button addNoteButton;
+    private Button saveNote;
 
-    private ArrayList<NoteEntity> fillNoteWithDumpData() {
-        final ArrayList<NoteEntity> noteEntities = new ArrayList<>();
-        noteEntities.add(new NoteEntity(
-                "Оглавление1",
-                "Текст1",
-                "0"));
-        noteEntities.add(new NoteEntity(
-                "Оглавление2",
-                "Текст2",
-                "1"));
-        noteEntities.add(new NoteEntity(
-                "Оглавление3",
-                "Текст3",
-                "2"));
-        noteEntities.add(new NoteEntity(
-                "Оглавление4",
-                "Текст4",
-                "3"));
-        noteEntities.add(new NoteEntity(
-                "Оглавление5",
-                "Текст5",
-                "4"));
-        return noteEntities;
-    }
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        noteList.addAll(fillNoteWithDumpData());
+        notesRepository = App.get(this).getNotesRepo();
         initNote();
+
+
 
     }
 
@@ -55,27 +40,49 @@ private final ArrayList<NoteEntity> noteList = new ArrayList<>();
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         adapter = new NoteAdapter();
         recyclerView.setAdapter(adapter);
-        adapter.setData(noteList);
-        adapter.setOnDeletClickListener(noteEntity -> {
-           deleteNotes(noteEntity);
+        adapter.setData(notesRepository.getNotes());
+        addNoteButton = findViewById(R.id.add_note_button);
+        addNoteButton.setOnClickListener(v -> {
+            notesRepository.addNotes();
+            adapter.setData(notesRepository.getNotes());
+
+
         });
+        saveNote = findViewById(R.id.save_button);
+        adapter.setOnNoteSaveListener(noteEntity -> {
+            savedNotes(noteEntity);
+        });
+
+        adapter.setOnDeletClickListener(noteEntity -> {
+            deleteNotes(noteEntity);
+
+        });
+        adapter.setOnNoteDoubleListener(noteEntity -> {
+            onClickDoubleView(noteEntity);
+        });
+
+
     }
-    private void deleteNotes (NoteEntity noteEntity) {
-        int pos = findPos(noteEntity);
-        noteList.remove(pos);
-        adapter.setData(noteList);
+
+
+    private void onClickDoubleView(NoteEntity noteEntity) {
+        Intent intent = new Intent(this, NotesActivity.class);
+        intent.putExtra(NotesActivity.NOTES_EXTRA_KEY, noteEntity);
+        startActivity(intent);
+    }
+
+    private void deleteNotes(NoteEntity noteEntity) {
+        notesRepository.deleteNotes(noteEntity);
+        adapter.setData(notesRepository.getNotes());
         Toast.makeText(this, noteEntity.getTitle() + " " + "Удаленно", Toast.LENGTH_SHORT).show();
     }
 
-    private int findPos(NoteEntity noteEntity) {
-        for (int i = 0; i < noteList.size(); i++) {
-            if(noteEntity.getId().equals(noteList.get(i).getId())) {
-                return i;
-            }
-
-        }
-          throw new IllegalArgumentException("Нет такого элемента");
+    private void savedNotes(NoteEntity noteEntity) {
+        notesRepository.saveNotes(noteEntity);
+        adapter.setData(notesRepository.getNotes());
     }
 
 
-}
+    }
+
+

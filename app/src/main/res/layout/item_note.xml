@@ -37,6 +37,23 @@
             android:textSize="20sp"
             android:backgroundTint="#00C853"
             android:textColor="@color/black"/>
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/double_button"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Второй экран"
+            android:textSize="20sp"
+            android:backgroundTint="#00C853"
+            android:textColor="@color/black"/>
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/save_button"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="SAVE"
+            android:textSize="20sp"
+            android:backgroundTint="#00C853"
+            android:textColor="@color/black"/>
+
 
 
 
