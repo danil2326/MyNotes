@@ -1,5 +1,6 @@
 package ru.gb.course1.mynotes.ui.main;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -26,6 +27,11 @@ public class NotesListFragment extends Fragment {
     private NoteEntity noteEntity;
     private Button addNoteButton;
     private Button saveNote;
+    private Controller controller;
+
+    interface Controller {
+        void showNotesDetail(NoteEntity noteEntity);
+    }
 
 
 
@@ -33,7 +39,7 @@ public class NotesListFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.activity_main, container, false);
+        return inflater.inflate(R.layout.fragment_notes_list, container, false);
     }
 
     @Override
@@ -42,6 +48,8 @@ public class NotesListFragment extends Fragment {
         initNote();
 
     }
+
+
 
     private void initNote() {
         recyclerView = getView().findViewById(R.id.recycler_view);
